@@ -124,4 +124,12 @@
             (swap! running-tests disj description)
             (print (style "F" :red))))))))
 
+(defn run-tests-in-packages [packages]
+  (let [^JUnitCore core (doto (JUnitCore.)
+                          (.addListener (run-listener packages)))
+        result (.run core
+                     (into-array Class
+                                 (find-all-tests packages)))]
+    {:failures (.getFailureCount result)}))
+
 (defn -main [& args])
