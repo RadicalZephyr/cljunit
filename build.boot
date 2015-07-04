@@ -9,6 +9,8 @@
                  [org.glassfish/javax.servlet "3.0"]
                  [radicalzephyr/bootlaces     "0.1.12"]])
 
+(require '[radicalzephyr.bootlaces :refer :all])
+
 (def +version+ "0.1.0-SNAPSHOT")
 
 (bootlaces! +version+)
