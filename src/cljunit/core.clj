@@ -124,12 +124,28 @@
             (swap! running-tests disj description)
             (print (style "F" :red))))))))
 
-(defn run-tests-in-packages [packages]
+(defn run-tests-for-classes [classes]
   (let [^JUnitCore core (doto (JUnitCore.)
-                          (.addListener (run-listener packages)))
+                          (.addListener (run-listener classes)))
         result (.run core
-                     (into-array Class
-                                 (find-all-tests packages)))]
+                     (into-array Class classes))]
     {:failures (.getFailureCount result)}))
+
+(defn get-class-in-package [package class]
+  (try
+    (Class/forName (str package "." class))
+    (catch java.lang.ClassNotFoundException e
+      nil)))
+
+(defn find-class-in-packages [packages suite]
+  (->> packages
+       (some #(get-class-in-package % suite))))
+
+(defn run-test-suite [packages suite-name]
+  (if-let [suite (find-class-in-packages packages suite-name)]
+    (run-tests-for-classes [suite])))
+
+(defn run-tests-in-packages [packages]
+  (run-tests-for-classes (find-all-tests packages)))
 
 (defn -main [& args])
