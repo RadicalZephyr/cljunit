@@ -1,7 +1,8 @@
 (set-env!
- :source-paths #{"src"}
+ :source-paths #{"src" "test"}
  :resource-paths #{"src"}
  :dependencies '[[org.clojure/clojure         "1.6.0"]
+                 [adzerk/boot-test            "1.0.4"]
                  [radicalzephyr/clansi        "1.2.0"]
                  [clj-stacktrace              "0.2.8"]
                  [junit                       "4.12"]
@@ -9,7 +10,8 @@
                  [org.glassfish/javax.servlet "3.0"]
                  [radicalzephyr/bootlaces     "0.1.12"]])
 
-(require '[radicalzephyr.bootlaces :refer :all])
+(require '[radicalzephyr.bootlaces :refer :all]
+         '[adzerk.boot-test        :refer :all])
 
 (def +version+ "0.1.1-SNAPSHOT")
 
