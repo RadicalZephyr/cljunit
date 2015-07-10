@@ -11,7 +11,7 @@
                  [radicalzephyr/bootlaces     "0.1.12"]])
 
 (require '[radicalzephyr.bootlaces :refer :all]
-         '[adzerk.boot-test        :refer :all])
+         '[adzerk.boot-test])
 
 (def +version+ "0.1.1-SNAPSHOT")
 
@@ -24,4 +24,9 @@
        :url         "https://github.com/radicalzephyr/cljunit"
        :scm         {:url "https://github.com/radicalzephyr/cljunit"}
        :license     {"Eclipse Public License"
-                     "http://www.eclipse.org/legal/epl-v10.html"}})
+                     "http://www.eclipse.org/legal/epl-v10.html"}}
+ adzerk.boot-test/test {:namespaces '[cljunit.core-test]})
+
+(deftask test []
+  (comp (javac)
+        (adzerk.boot-test/test)))
