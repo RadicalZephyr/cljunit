@@ -141,8 +141,8 @@
   (->> packages
        (some #(get-class-in-package % suite))))
 
-(defn run-test-suite [packages suite-name]
-  (if-let [suite (find-class-in-packages packages suite-name)]
+(defn run-test-class [packages class-name]
+  (if-let [suite (find-class-in-packages packages class-name)]
     (run-tests-for-classes [suite])))
 
 (defn run-tests-in-packages [packages]

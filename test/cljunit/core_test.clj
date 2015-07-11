@@ -12,11 +12,11 @@
     (find-class-in-packages ["java.io"] "File") => java.io.File
     (find-class-in-packages ["java.net" "java.io"] "File") => java.io.File)
 
-  (facts "about run-test-suite"
+  (facts "about run-test-class"
     (with-out-str
-      (run-test-suite ["java.net"] "TestingClass") => nil
-      (run-test-suite ["cljunit"] "CljUnitPassingSuite") => {:failures 0}
-      (run-test-suite ["failing.cljunit"] "CljUnitFailingSuite") => {:failures 1}))
+      (run-test-class ["java.net"] "TestingClass") => nil
+      (run-test-class ["cljunit"] "CljUnitPassingSuite") => {:failures 0}
+      (run-test-class ["failing.cljunit"] "CljUnitFailingSuite") => {:failures 1}))
 
   (facts "about run-tests-in-packages"
     (with-out-str
