@@ -12,14 +12,6 @@
     (find-class-in-packages ["java.io"] "File") => java.io.File
     (find-class-in-packages ["java.net" "java.io"] "File") => java.io.File)
 
-  (facts "about run-test-class"
-    (with-out-str
-      (run-test-class ["java.net"] "TestingClass") => nil
-      (run-test-class ["cljunit"]
-                      "CljUnitPassingSuite") => {:failures 0}
-      (run-test-class ["failing.cljunit"]
-                      "CljUnitFailingSuite") => {:failures 1}))
-
   (facts "about run-test-classes"
     (with-out-str
       (run-test-classes ["java.net"] ["TestingClass"]) => nil
