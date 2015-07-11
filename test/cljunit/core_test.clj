@@ -15,8 +15,11 @@
   (facts "about run-test-class"
     (with-out-str
       (run-test-class ["java.net"] "TestingClass") => nil
-      (run-test-class ["cljunit"] "CljUnitPassingSuite") => {:failures 0}
-      (run-test-class ["failing.cljunit"] "CljUnitFailingSuite") => {:failures 1}))
+      (run-test-class ["cljunit"]
+                      "CljUnitPassingSuite") => {:failures 0}
+      (run-test-class ["failing.cljunit"]
+                      "CljUnitFailingSuite") => {:failures 1}))
+
 
   (facts "about run-tests-in-packages"
     (with-out-str
