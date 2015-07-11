@@ -20,6 +20,14 @@
       (run-test-class ["failing.cljunit"]
                       "CljUnitFailingSuite") => {:failures 1}))
 
+  (facts "about run-test-classes"
+    (with-out-str
+      (run-test-classes ["java.net"] ["TestingClass"]) => nil
+      (run-test-classes ["cljunit"]
+                        ["CljUnitPassingSuite"]) => {:failures 0}
+      (run-test-classes ["cljunit" "failing.cljunit"]
+                        ["CljUnitPassingSuite"
+                         "CljUnitFailingSuite"]) => {:failures 1}))
 
   (facts "about run-tests-in-packages"
     (with-out-str

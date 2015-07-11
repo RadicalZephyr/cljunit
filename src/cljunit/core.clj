@@ -145,6 +145,13 @@
   (if-let [suite (find-class-in-packages packages class-name)]
     (run-tests-for-classes [suite])))
 
+(defn run-test-classes [packages class-names]
+  (some->> class-names
+           (map (partial find-class-in-packages packages))
+           (filter identity)
+           seq
+           run-tests-for-classes))
+
 (defn run-tests-in-packages [packages]
   (run-tests-for-classes (find-all-tests packages)))
 
