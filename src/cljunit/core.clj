@@ -91,14 +91,14 @@
                                test-count failure-count ignore-count)
                     (if (> failure-count 0) :red :green)))))
 
-(defn run-listener [packages]
+(defn run-listener [classes]
   (let [running-tests (atom #{})
         ignored-tests (atom #{})]
     (proxy [RunListener]
         []
       (testRunStarted [description]
         (println "Running jUnit tests for"
-                 (str/join ", " packages)))
+                 (str/join ", " classes)))
 
       (testRunFinished [result]
         (print "\n\n")
