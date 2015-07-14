@@ -1,12 +1,11 @@
 (set-env!
  :source-paths #{"src"}
- :resource-paths #{"src"}
  :dependencies '[[org.clojure/clojure         "1.8.0"]
                  [radicalzephyr/clansi        "1.2.0"]
                  [clj-stacktrace              "0.2.8"]
                  [junit                       "4.12"]
                  [org.glassfish/javax.servlet "3.0"]
-                 [radicalzephyr/bootlaces     "0.1.12"]])
+                 [radicalzephyr/bootlaces     "0.1.15-SNAPSHOT"]])
 
 (require '[radicalzephyr.bootlaces :refer :all])
 
