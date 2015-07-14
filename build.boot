@@ -8,7 +8,7 @@
                  [junit                "4.12" ]
                  [org.reflections/reflections "0.9.10"]
                  [org.glassfish/javax.servlet "3.0"]
-                 [radicalzephyr/bootlaces     "0.1.14"]])
+                 [radicalzephyr/bootlaces     "0.1.15-SNAPSHOT"]])
 
 (require '[radicalzephyr.bootlaces :refer :all]
          '[zilti.boot-midje        :refer [midje]])
