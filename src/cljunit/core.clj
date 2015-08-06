@@ -68,8 +68,8 @@
     (proxy [RunListener]
         []
       (testRunStarted [description]
-        (println "Running jUnit tests for"
-                 (str/join ", " classes)))
+        (println "Running jUnit tests for:\n\t"
+                 (str/join "\n\t" classes)))
 
       (testRunFinished [result]
         (print "\n\n")
