@@ -1,7 +1,7 @@
 (set-env!
  :source-paths #{"src"}
  :resource-paths #{"src"}
- :dependencies '[[org.clojure/clojure         "1.6.0"]
+ :dependencies '[[org.clojure/clojure         "1.8.0"]
                  [radicalzephyr/clansi        "1.2.0"]
                  [clj-stacktrace              "0.2.8"]
                  [junit                       "4.12"]
