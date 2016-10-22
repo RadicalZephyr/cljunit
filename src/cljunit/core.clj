@@ -4,36 +4,7 @@
             [clojure.string :as str]
             [clansi.core    :refer [style]])
   (:import org.junit.runner.JUnitCore
-           org.junit.runner.notification.RunListener
-           (org.reflections Reflections
-                            Configuration)
-           (org.reflections.scanners Scanner
-                                     TypeAnnotationsScanner
-                                     MethodAnnotationsScanner)
-           (org.reflections.util ClasspathHelper
-                                 ConfigurationBuilder
-                                 FilterBuilder)))
-
-(defn- build-package-config [^String package]
-  (.. (ConfigurationBuilder.)
-      (setUrls (ClasspathHelper/forPackage package (into-array ClassLoader [])))
-      (setScanners (into-array Scanner [(TypeAnnotationsScanner.)
-                                        (MethodAnnotationsScanner.)]))
-      (filterInputsBy (.. (FilterBuilder.)
-                          (includePackage (into-array String [package]))))))
-
-(defn- find-tests-in-package [package]
-  (let [^Configuration config (build-package-config package)
-        reflections (Reflections. config)
-        test-methods (.getMethodsAnnotatedWith reflections
-                                               org.junit.Test)]
-    (map (memfn getDeclaringClass) test-methods)))
-
-(defn- find-all-tests [packages]
-  (->> packages
-       (map str)
-       (mapcat find-tests-in-package)
-       set))
+           org.junit.runner.notification.RunListener))
 
 (defn- print-ignored-tests [ignored-tests]
   (when (seq ignored-tests)
@@ -124,12 +95,22 @@
             (swap! running-tests disj description)
             (print (style "F" :red))))))))
 
-(defn run-tests-in-packages [packages]
-  (let [^JUnitCore core (doto (JUnitCore.)
-                          (.addListener (run-listener packages)))
-        result (.run core
-                     (into-array Class
-                                 (find-all-tests packages)))]
-    {:failures (.getFailureCount result)}))
+(defn- junit-test-annotation? [annotation]
+  (= org.junit.Test (.annotationType annotation)))
 
-(defn -main [& args])
+(defn- has-junit-test-annotation? [method]
+  (some junit-test-annotation? (seq (.getDeclaredAnnotations method))))
+
+(defn- has-junit-tests? [klass]
+  (some has-junit-test-annotation? (seq (.getDeclaredMethods klass))))
+
+(defn run-tests-in-classes [class-names]
+  (let [cl (clojure.lang.RT/makeClassLoader)
+        test-classes (->> class-names
+                          (map #(.loadClass cl %))
+                          (filter has-junit-tests?))
+        ^JUnitCore core (doto (JUnitCore.)
+                          (.addListener (run-listener test-classes)))
+        result (.run core
+                     (into-array Class test-classes))]
+    {:failures (.getFailureCount result)}))
