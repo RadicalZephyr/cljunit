@@ -2,7 +2,8 @@
   (:require [clojure.pprint :refer [cl-format]]
             [clj-stacktrace.core :refer [parse-exception]]
             [clojure.string :as str]
-            [clansi.core    :refer [style]])
+            [clansi.core    :refer [style]]
+            [cljunit.filter :as filter])
   (:import org.junit.runner.JUnitCore
            org.junit.runner.notification.RunListener))
 
@@ -104,9 +105,10 @@
 (defn- has-junit-tests? [klass]
   (some has-junit-test-annotation? (seq (.getDeclaredMethods klass))))
 
-(defn run-tests-in-classes [class-names]
+(defn run-tests-in-classes [class-names & {:as filters}]
   (let [cl (clojure.lang.RT/makeClassLoader)
         test-classes (->> class-names
+                          (filter (filter/by filters))
                           (map #(.loadClass cl %))
                           (filter has-junit-tests?))
         ^JUnitCore core (doto (JUnitCore.)
