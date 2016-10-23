@@ -10,6 +10,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 - Made implementation more re-loadable
 - Ability to identify any test class with a `RunWith` annotation
 - Ability to identify jUnit version 3 style `TestCase` classes
+- New singular public interface for running tests
+  `run-tests-in-classes`
 
 ### Changed
 
@@ -18,6 +20,7 @@ of [keepachangelog.com](http://keepachangelog.com/).
 ### Removed
 
 - Reflections library as a dependency
+- Previous public method `run-tests-in-packages`
 
 [Unreleased]: https://github.com/RadicalZephyr/cljunit/compare/0.1.0...HEAD
 
