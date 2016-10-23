@@ -5,6 +5,10 @@
 
 (m/facts "about running tests"
   (with-out-str
+    (m/fact "it gracefully handles being given non-existent class names"
+      (sut/run-tests-in-classes ["foo.bar.Baz"]
+                                :packages ["other"]) => nil)
+
     (m/fact "it can filter test runs based on package names"
       (sut/run-tests-in-classes ["cljunit.CljUnitTest"]
                                 :packages ["other"]) => nil)
