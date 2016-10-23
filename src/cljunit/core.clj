@@ -104,7 +104,8 @@
   (has-annotation? method org.junit.Test))
 
 (defn- has-junit-tests? [klass]
-  (or (has-annotation? klass org.junit.runner.RunWith)
+  (or (isa? klass junit.framework.TestCase)
+      (has-annotation? klass org.junit.runner.RunWith)
       (some has-junit-test-annotation? (.getDeclaredMethods klass))))
 
 (defn run-tests-in-classes [class-names & {:as filters}]

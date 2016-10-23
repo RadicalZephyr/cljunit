@@ -9,6 +9,7 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Made implementation more re-loadable
 - Ability to identify any test class with a `RunWith` annotation
+- Ability to identify jUnit version 3 style `TestCase` classes
 
 ### Changed
 

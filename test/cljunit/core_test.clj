@@ -17,6 +17,10 @@
       (sut/run-tests-in-classes ["cljunit.CljUnitTest"]
                                 :packgaes ["cljunit"]) => {:failures 0})
 
-    (m/fact "it can run a class that is jUnit test suite"
+    (m/fact "it can run a class that is a jUnit test suite"
       (sut/run-tests-in-classes ["cljunit.CljUnitPassingSuite"]
-                                :classes ["CljUnitPassingSuite"]) => {:failures 0})))
+                                :classes ["CljUnitPassingSuite"]) => {:failures 0})
+
+    (m/fact "it can run a jUnit 3 style TestCase"
+      (sut/run-tests-in-classes ["cljunit.CljUnitV3Test"]
+                                :packages ["cljunit"]) => {:failures 0})))
