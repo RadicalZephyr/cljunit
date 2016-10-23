@@ -96,14 +96,16 @@
             (swap! running-tests disj description)
             (print (style "F" :red))))))))
 
-(defn- junit-test-annotation? [annotation]
-  (= org.junit.Test (.annotationType annotation)))
+(defn- has-annotation? [subject annotation-type]
+  (some #(= annotation-type (.annotationType %))
+        (.getDeclaredAnnotations subject)))
 
 (defn- has-junit-test-annotation? [method]
-  (some junit-test-annotation? (seq (.getDeclaredAnnotations method))))
+  (has-annotation? method org.junit.Test))
 
 (defn- has-junit-tests? [klass]
-  (some has-junit-test-annotation? (seq (.getDeclaredMethods klass))))
+  (or (has-annotation? klass org.junit.runner.RunWith)
+      (some has-junit-test-annotation? (.getDeclaredMethods klass))))
 
 (defn run-tests-in-classes [class-names & {:as filters}]
   (let [cl (clojure.lang.RT/makeClassLoader)

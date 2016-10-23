@@ -8,6 +8,7 @@ of [keepachangelog.com](http://keepachangelog.com/).
 ### Added
 
 - Made implementation more re-loadable
+- Ability to identify any test class with a `RunWith` annotation
 
 ### Changed
 
