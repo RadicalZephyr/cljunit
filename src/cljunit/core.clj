@@ -110,9 +110,10 @@
         test-classes (->> class-names
                           (filter (filter/by filters))
                           (map #(.loadClass cl %))
-                          (filter has-junit-tests?))
-        ^JUnitCore core (doto (JUnitCore.)
-                          (.addListener (run-listener test-classes)))
-        result (.run core
-                     (into-array Class test-classes))]
-    {:failures (.getFailureCount result)}))
+                          (filter has-junit-tests?))]
+    (when (seq test-classes)
+      (let [^JUnitCore core (doto (JUnitCore.)
+                              (.addListener (run-listener test-classes)))
+            result (.run core
+                         (into-array Class test-classes))]
+        {:failures (.getFailureCount result)}))))

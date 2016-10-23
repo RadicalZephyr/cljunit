@@ -34,4 +34,4 @@
   "Run the tests"
   []
   (set-env! :source-paths #(conj % "test"))
-  (midje))
+  (comp (javac) (midje)))
