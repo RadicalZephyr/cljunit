@@ -5,7 +5,7 @@
                  [clj-stacktrace              "0.2.8"]
                  [junit                       "4.12"]
                  [org.glassfish/javax.servlet "3.0"]
-                 [midje                       "1.8.2" :scope "test"]
+                 [midje                       "1.9.0-alpha6" :scope "test"]
                  [zilti/boot-midje            "0.2.2-SNAPSHOT" :scope "test"]
                  [radicalzephyr/bootlaces     "0.1.15-SNAPSHOT" :scope "test"]])
 
