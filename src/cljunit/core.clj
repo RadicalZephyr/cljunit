@@ -117,6 +117,11 @@
     (when (seq test-classes)
       (let [^JUnitCore core (doto (JUnitCore.)
                               (.addListener (run-listener test-classes)))
+            _ (doseq [listener-name (:listeners filters)]
+                (let [klazz (Class/forName listener-name)
+                      constr (.getConstructor klazz (into-array Class []))
+                      ^RunListener obj (.newInstance constr (into-array Object []))]
+                  (.addListener core obj)))
             result (.run core
                          (into-array Class test-classes))]
         {:failures (.getFailureCount result)}))))
