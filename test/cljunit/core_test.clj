@@ -1,6 +1,5 @@
 (ns cljunit.core-test
   (:require [cljunit.core :as sut]
-            [midje.sweet :as midje]
             [midje.sweet :as m]))
 
 (m/facts "about running tests"
@@ -19,7 +18,7 @@
 
     (m/fact "it can find and run classes in a specified package"
       (sut/run-tests-in-classes ["cljunit.CljUnitTest"]
-                                :packgaes ["cljunit"]) => {:failures 0})
+                                :packages ["cljunit"]) => {:failures 0})
 
     (m/fact "it can run a class that is a jUnit test suite"
       (sut/run-tests-in-classes ["cljunit.CljUnitPassingSuite"]
