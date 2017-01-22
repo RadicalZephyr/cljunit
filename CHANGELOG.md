@@ -3,8 +3,11 @@ All notable changes to this project will be documented in this
 file. This change log follows the conventions
 of [keepachangelog.com](http://keepachangelog.com/).
 
-
 ## [Unreleased]
+
+-[Unreleased]: https://github.com/RadicalZephyr/cljunit/compare/0.2.0...HEAD
+
+## 0.2.0
 ### Added
 
 - Made implementation more re-loadable
@@ -22,7 +25,7 @@ of [keepachangelog.com](http://keepachangelog.com/).
 - Reflections library as a dependency
 - Previous public method `run-tests-in-packages`
 
-[Unreleased]: https://github.com/RadicalZephyr/cljunit/compare/0.1.0...HEAD
+[0.2.0]: https://github.com/RadicalZephyr/cljunit/compare/0.1.0...0.2.0
 
 
 ## [0.1.0] - 2016-06-08
