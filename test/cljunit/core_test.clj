@@ -37,4 +37,9 @@
         (ListenerFixture/runStartedCalled) => m/truthy
         (ListenerFixture/runFinishedCalled) => m/truthy
 
-        (m/against-background (m/before :facts (ListenerFixture/reset)))))))
+        (m/against-background (m/before :facts (ListenerFixture/reset))))
+
+      (m/fact "it ignores class names that are not RunListeners"
+        (sut/run-tests-in-classes ["cljunit.CljUnitTest"]
+                                  :listeners ["cljunit.NonRunListener"]
+                                  :packages ["cljunit"]) => {:failures 0}))))
