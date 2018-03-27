@@ -4,8 +4,11 @@ file. This change log follows the conventions
 of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
+### Added
 
--[Unreleased]: https://github.com/RadicalZephyr/cljunit/compare/0.2.0...HEAD
+- Add an option for specifying arbitrary RunListener classes
+
+[Unreleased]: https://github.com/RadicalZephyr/cljunit/compare/0.2.0...HEAD
 
 ## 0.2.0
 ### Added
