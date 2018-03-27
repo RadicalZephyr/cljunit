@@ -1,9 +1,9 @@
 (ns cljunit.core
-  (:require [clojure.pprint :refer [cl-format]]
-            [clj-stacktrace.core :refer [parse-exception]]
+  (:require [clojure.pprint :as pp]
             [clojure.string :as str]
             [clansi.core    :refer [style]]
-            [cljunit.filter :as filter])
+            [cljunit.filter :as filter]
+            [io.aviso.exception :as e])
   (:import org.junit.runner.JUnitCore
            org.junit.runner.notification.RunListener))
 
@@ -16,42 +16,36 @@
               (inc i) (style (.getDisplayName ignored) :yellow))
       (println))))
 
-(defn- skip-assert-traces [traces]
-  (filter #(not (or (= (:class %) "org.junit.Assert")
-                    (= (:class %) "org.hamcrest.MatcherAssert"))) traces))
+(def junit-frame-rules
+  [[#(str (:class %) "." (:method %)) "java.lang.Thread.run" :hide]
+   [:package "java.lang.reflect" :hide]
+   [:package "java.util.concurrent" :hide]
+   [:package #"sun\.reflect.*" :hide]
 
-(defn- take-until-reflection [traces]
-  (take-while #(not (.contains (:class %) "reflect")) traces))
+   [:package "clojure.lang" :hide]
+   [:package "clojure.core" :hide]
+   [:name #"clojure\.core.*" :hide]
 
-(defn- convert-to-message [trace]
-  (format "%s.%s  %s: %d "
-          (:class trace)
-          (:method trace)
-          (:file trace)
-          (:line trace)))
+   [:package #"boot.*" :hide]
+   [:package "org.projectodd.shimdandy.impl" :hide]
+   [:simple-class #"pod.*" :hide]
 
-(defn- process-trace [throwable]
-  (let [ex-map (parse-exception throwable)
-        relevant-traces (->> (:trace-elems ex-map)
-                             skip-assert-traces
-                             take-until-reflection
-                             (map convert-to-message))]
-    (format "%s: %s\n       %s"
-            (:class ex-map)
-            (:message ex-map)
-            (str/join "\n       " relevant-traces))))
+   [:package #"org\.junit.*" :hide]
+   [:name #"cljunit\.core.*" :hide]
+   [:name #"radicalzephyr\.boot-junit.*" :hide]
 
+   [:class "org.junit.Assert" :terminate]
+   [:class "org.hamcrest.MatcherAssert" :terminate]])
 
 (defn- print-failed-tests [test-failures]
   (when (seq test-failures)
     (println "Failed:")
     (println)
-    (doseq [[i failure] (map-indexed vector test-failures)]
-      (printf "  %d) %s\n"
-              (inc i) (.getTestHeader failure))
-      (printf "     %s\n" (style (process-trace (.getException failure))
-                                 :red))
-      (println))))
+    (binding [io.aviso.exception/*default-frame-rules* junit-frame-rules]
+      (doseq [[i failure] (map-indexed vector test-failures)]
+        (printf "  %d) %s\n" (inc i) (.getTestHeader failure))
+        (e/write-exception *out* (.getException failure))
+        (println)))))
 
 (defn- print-test-summary [result]
   (printf "Finished in %s seconds\n" (float (/ (.getRunTime result) 1000)))
@@ -59,8 +53,8 @@
         ignore-count  (.getIgnoreCount   result)
         failure-count (.getFailureCount  result)
         test-count (+ run-count ignore-count)]
-    (println (style (cl-format nil "~D test~:P, ~D failure~:P~[~;, ~:*~D ignored~]~%"
-                               test-count failure-count ignore-count)
+    (println (style (pp/cl-format nil "~D test~:P, ~D failure~:P~[~;, ~:*~D ignored~]~%"
+                                  test-count failure-count ignore-count)
                     (if (> failure-count 0) :red :green)))))
 
 (defn run-listener [classes]

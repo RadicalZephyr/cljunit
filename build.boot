@@ -3,7 +3,7 @@
  :resource-paths #{"src"}
  :dependencies '[[org.clojure/clojure         "1.9.0"]
                  [radicalzephyr/clansi        "1.2.0"]
-                 [clj-stacktrace              "0.2.8"]
+                 [io.aviso/pretty             "0.1.34"]
                  [junit                       "4.12"]
                  [org.glassfish/javax.servlet "3.0"]
                  [midje                       "1.9.1" :scope "test"]

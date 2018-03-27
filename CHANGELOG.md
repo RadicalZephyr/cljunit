@@ -8,6 +8,11 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add an option for specifying arbitrary RunListener classes
 
+### Changed
+
+- Replaced custom stacktrace filtering with use of [io.aviso/pretty][pretty]
+
+[pretty]: https://github.com/AvisoNovate/pretty
 [Unreleased]: https://github.com/RadicalZephyr/cljunit/compare/0.2.0...HEAD
 
 ## 0.2.0
