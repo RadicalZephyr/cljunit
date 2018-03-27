@@ -1,12 +1,12 @@
 (set-env!
  :source-paths #{"src"}
  :resource-paths #{"src"}
- :dependencies '[[org.clojure/clojure         "1.8.0"]
+ :dependencies '[[org.clojure/clojure         "1.9.0"]
                  [radicalzephyr/clansi        "1.2.0"]
                  [clj-stacktrace              "0.2.8"]
                  [junit                       "4.12"]
                  [org.glassfish/javax.servlet "3.0"]
-                 [midje                       "1.8.2" :scope "test"]
+                 [midje                       "1.9.1" :scope "test"]
                  [zilti/boot-midje            "0.2.2-SNAPSHOT" :scope "test"]])
 
 (require '[zilti.boot-midje :refer [midje]])
