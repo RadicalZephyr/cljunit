@@ -108,8 +108,10 @@
       (has-annotation? klass org.junit.runner.RunWith)
       (some has-junit-test-annotation? (.getDeclaredMethods klass))))
 
-(defn run-tests-in-classes [class-names & {:as filters}]
-  (let [cl (clojure.lang.RT/makeClassLoader)
+(defn run-tests-in-classes [class-names & {:as options}]
+  (let [filters (dissoc options :listeners)
+        listeners (get options :listeners)
+        cl (clojure.lang.RT/makeClassLoader)
         test-classes (->> class-names
                           (filter (filter/by filters))
                           (map #(.loadClass cl %))
@@ -117,7 +119,7 @@
     (when (seq test-classes)
       (let [^JUnitCore core (doto (JUnitCore.)
                               (.addListener (run-listener test-classes)))
-            _ (doseq [listener-name (:listeners filters)]
+            _ (doseq [listener-name listeners]
                 (let [klazz (Class/forName listener-name)
                       constr (.getConstructor klazz (into-array Class []))
                       ^RunListener obj (.newInstance constr (into-array Object []))]

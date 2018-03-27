@@ -1,6 +1,7 @@
 (ns cljunit.core-test
   (:require [cljunit.core :as sut]
-            [midje.sweet :as m]))
+            [midje.sweet :as m])
+  (:import cljunit.ListenerFixture))
 
 (m/facts "about running tests"
   (with-out-str
@@ -26,4 +27,14 @@
 
     (m/fact "it can run a jUnit 3 style TestCase"
       (sut/run-tests-in-classes ["cljunit.CljUnitV3Test"]
-                                :packages ["cljunit"]) => {:failures 0})))
+                                :packages ["cljunit"]) => {:failures 0})
+
+    (m/facts "adding arbitrary other RunListeners"
+      (m/fact "it can take RunListeners passed by name"
+        (sut/run-tests-in-classes ["cljunit.CljUnitTest"]
+                                  :listeners ["cljunit.ListenerFixture"]
+                                  :packages ["cljunit"]) => {:failures 0}
+        (ListenerFixture/runStartedCalled) => m/truthy
+        (ListenerFixture/runFinishedCalled) => m/truthy
+
+        (m/against-background (m/before :facts (ListenerFixture/reset)))))))
