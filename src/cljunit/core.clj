@@ -30,12 +30,11 @@
    [:package "org.projectodd.shimdandy.impl" :hide]
    [:simple-class #"pod.*" :hide]
 
-   [:package #"org\.junit.*" :hide]
    [:name #"cljunit\.core.*" :hide]
    [:name #"radicalzephyr\.boot-junit.*" :hide]
 
-   [:class "org.junit.Assert" :terminate]
-   [:class "org.hamcrest.MatcherAssert" :terminate]])
+   [:package #"org\.junit.*" :hide]
+   [:package #"org.hamcrest*" :hide]])
 
 (defn- print-failed-tests [test-failures]
   (when (seq test-failures)
