@@ -11,7 +11,7 @@
 
 (require '[zilti.boot-midje :refer [midje]])
 
-(def +version+ "0.3.0-SNAPSHOT")
+(def +version+ "0.3.0")
 
 (task-options!
  pom  {:project     'radicalzephyr/cljunit
