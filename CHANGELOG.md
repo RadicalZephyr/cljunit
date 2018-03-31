@@ -4,6 +4,10 @@ file. This change log follows the conventions
 of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
+
+[Unreleased]: https://github.com/RadicalZephyr/cljunit/compare/0.2.0...HEAD
+
+## [0.3.0]
 ### Added
 
 - Add an option for specifying arbitrary RunListener classes
@@ -13,9 +17,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 - Replaced custom stacktrace filtering with use of [io.aviso/pretty][pretty]
 
 [pretty]: https://github.com/AvisoNovate/pretty
-[Unreleased]: https://github.com/RadicalZephyr/cljunit/compare/0.2.0...HEAD
+[0.3.0]: https://github.com/RadicalZephyr/cljunit/compare/0.2.0...0.3.0
 
-## 0.2.0
+## [0.2.0]
 ### Added
 
 - Made implementation more re-loadable
